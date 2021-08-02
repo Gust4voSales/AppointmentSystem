@@ -1,10 +1,12 @@
 import express  from "express"
-import BookController from "./controllers/BookController"
+import AppointmentController from "./controllers/AppointmentController"
 
 const router = express.Router()
 
-router.post("/books", BookController.store)
+router.get('/', (req, res) => {
+  res.json({ msg: "oi" })
+})
 
-router.get('/books', BookController.index)
+router.post('/appointment', AppointmentController.store)
 
 export default router
