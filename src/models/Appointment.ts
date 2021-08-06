@@ -8,6 +8,9 @@ export class Appointment {
   @Column("varchar")
   user: string
 
+  @Column("varchar")
+  service: string
+
   @Column("timestamp with time zone")
   dateTime: Date
 

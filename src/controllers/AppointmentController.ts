@@ -3,11 +3,11 @@ import AppointmentService from "../services/AppointmentService";
 
 class AppointmentController {
   async store(req: Request, res: Response) {
-    const { user, dateTime, employee } = req.body 
+    const { user, service, dateTime, employee } = req.body 
 
     const parsedTime = new Date(dateTime)
 
-    const appointment = await AppointmentService.scheduleAppointment(user, parsedTime, employee)
+    const appointment = await AppointmentService.scheduleAppointment(user, service, parsedTime, employee)
   
     return res.status(201).json({ appointment })
   }
