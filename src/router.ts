@@ -8,5 +8,8 @@ router.get('/', (req, res) => {
 })
 
 router.post('/appointment', AppointmentController.store)
+router.get('/appointment', AppointmentController.index)
+router.get('/appointment/:id', AppointmentController.show)
+router.delete('/appointment/:id', AppointmentController.destroy)
 
 export default router

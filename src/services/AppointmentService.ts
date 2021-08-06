@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm"
+import { getCustomRepository, } from "typeorm"
+import NotFoundException from "../errors/exceptions/NotFound"
 import { AppointmentRepository } from "../repositories/AppointmentRepository"
 
 class AppointmentService {
@@ -12,6 +13,33 @@ class AppointmentService {
     })
     
     return await repository.save(appointment)
+  }
+
+  async cancelAppointment (id: string) {
+    const repository = getCustomRepository(AppointmentRepository)
+
+    const result = await repository.delete(id)
+      
+    return result.affected;
+  }
+
+  async getUserAppointments(user: string) {
+    const repository = getCustomRepository(AppointmentRepository)
+
+    const appointments = await repository.find({ user, })
+
+    return appointments
+  }
+
+  async getAppointmentDetails(id: string) {
+    const repository = getCustomRepository(AppointmentRepository)
+
+    const appointment = await repository.findOne(id)
+    
+    if (!appointment)
+      throw new NotFoundException("Appointment not found")
+
+    return appointment
   }
 }
 

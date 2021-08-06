@@ -12,6 +12,29 @@ class AppointmentController {
     return res.status(201).json({ appointment })
   }
 
+  async index(req: Request, res: Response) {
+    const user: string  = req.query.user as string
+
+    const appointments = await AppointmentService.getUserAppointments(user)
+
+    return res.status(200).json({ appointments })
+  }
+
+  async show(req: Request, res: Response) {
+    const { id } = req.params
+
+    const appointment = await AppointmentService.getAppointmentDetails(id)
+
+    return res.status(200).json({ appointment })
+  }
+
+  async destroy(req: Request, res: Response) {
+    const { id } = req.params
+
+    const deleted = await AppointmentService.cancelAppointment(id)
+
+    return res.status(200).json({ deleted })
+  }
 }
 
 export default new AppointmentController()
