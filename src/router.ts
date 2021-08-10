@@ -20,5 +20,7 @@ router.delete('/appointment/:id', AppointmentController.destroy)
 
 // SERVICE ROUTES
 router.post('/service', ServiceController.store)
+router.get('/service', ServiceController.index)
+router.delete('/service/:id', ServiceController.destroy)
 
 export default router
