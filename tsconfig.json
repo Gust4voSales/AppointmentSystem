@@ -13,6 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
-    "resolveJsonModule": true
+    "typeRoots": ["./@types"]
   }
 }
