@@ -1,5 +1,4 @@
 import express  from "express"
-import { getRepository } from "typeorm"
 import AppointmentController from "./controllers/AppointmentController"
 import authFirebase from "./middlewares/firebaseAuth"
 

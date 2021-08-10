@@ -1,11 +1,11 @@
 declare namespace Express {
   interface Request {
     user?: {
-      name: string
+      name?: string
       uid: string
-      picture: string
-      email: string
-      email_verified: boolean
+      picture?: string
+      email?: string
+      email_verified?: boolean
       firebase: {
         sign_in_provider: string
       }
