@@ -1,5 +1,6 @@
 import express  from "express"
 import AppointmentController from "./controllers/AppointmentController"
+import authFirebase from "./middlewares/firebaseAuth"
 
 const router = express.Router()
 
@@ -7,8 +8,11 @@ router.get('/', (req, res) => {
   res.json({ msg: "oi" })
 })
 
+// USER ROUTES
+
+// APPOINTMENT ROUTES
 router.post('/appointment', AppointmentController.store)
-router.get('/appointment', AppointmentController.index)
+router.get('/appointment', authFirebase, AppointmentController.index)
 router.get('/appointment/:id', AppointmentController.show)
 router.delete('/appointment/:id', AppointmentController.destroy)
 
