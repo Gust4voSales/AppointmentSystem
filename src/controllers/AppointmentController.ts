@@ -1,13 +1,22 @@
 import { Request, Response } from "express";
 import AppointmentService from "../services/AppointmentService";
 
+
+interface AppointmentData {
+  service: number
+  dateTime: string
+  employee: string
+}
+
 class AppointmentController {
   async store(req: Request, res: Response) {
-    const { service, dateTime, employee } = req.body 
+    const { service, dateTime, employee } = req.body as AppointmentData
 
     const parsedTime = new Date(dateTime)
+    const userId = req.user.uid
 
-    const appointment = await AppointmentService.scheduleAppointment(req.user.uid, service, parsedTime, employee)
+    const appointment = 
+      await AppointmentService.scheduleAppointment(userId, service, parsedTime, employee)
   
     return res.status(201).json({ appointment })
   }

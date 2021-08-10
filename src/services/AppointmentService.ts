@@ -4,11 +4,13 @@ import { AppointmentRepository } from "../repositories/AppointmentRepository"
 
 
 class AppointmentService {
-  async scheduleAppointment(userId: string, service: string, dateTime: Date, employee: string) {
+  async scheduleAppointment(userId: string, service: number, dateTime: Date, employee: string) {
     const repository = getCustomRepository(AppointmentRepository)
 
+    // CHECK IF SERVICE EXISTS 
+
     const appointment = repository.create({
-      service, dateTime, employee, client_user_id: userId
+      service_id: service, dateTime, employee, client_user_id: userId
     })
     
     return await repository.save(appointment)
@@ -26,6 +28,8 @@ class AppointmentService {
     const repository = getCustomRepository(AppointmentRepository)
 
     const appointments = await repository.find({ client_user_id: userId, })
+    // const appointments = await repository
+    //   .createQueryBuilder()
 
     return appointments
   }
