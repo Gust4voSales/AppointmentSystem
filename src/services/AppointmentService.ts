@@ -2,14 +2,13 @@ import { getCustomRepository, } from "typeorm"
 import NotFoundException from "../errors/exceptions/NotFound"
 import { AppointmentRepository } from "../repositories/AppointmentRepository"
 
+
 class AppointmentService {
-  async scheduleAppointment(user: string, service: string, dateTime: Date, employee: string) {
+  async scheduleAppointment(userId: string, service: string, dateTime: Date, employee: string) {
     const repository = getCustomRepository(AppointmentRepository)
 
-    // console.log(dateTime.toLocaleString());
-    
     const appointment = repository.create({
-      user, service, dateTime, employee,
+      service, dateTime, employee, client_user_id: userId
     })
     
     return await repository.save(appointment)
@@ -23,10 +22,10 @@ class AppointmentService {
     return result.affected;
   }
 
-  async getUserAppointments(user: string) {
+  async getUserAppointments(userId: string) {
     const repository = getCustomRepository(AppointmentRepository)
 
-    const appointments = await repository.find({ user, })
+    const appointments = await repository.find({ client_user_id: userId, })
 
     return appointments
   }

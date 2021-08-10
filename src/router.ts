@@ -1,4 +1,5 @@
 import express  from "express"
+import { getRepository } from "typeorm"
 import AppointmentController from "./controllers/AppointmentController"
 import authFirebase from "./middlewares/firebaseAuth"
 
@@ -10,8 +11,9 @@ router.get('/', (req, res) => {
 
 // USER ROUTES
 
+
 // APPOINTMENT ROUTES
-router.post('/appointment', AppointmentController.store)
+router.post('/appointment', authFirebase, AppointmentController.store)
 router.get('/appointment', authFirebase, AppointmentController.index)
 router.get('/appointment/:id', AppointmentController.show)
 router.delete('/appointment/:id', AppointmentController.destroy)

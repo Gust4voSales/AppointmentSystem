@@ -1,5 +1,5 @@
 // REMEMBER: If you want to execute yarn start and you're not in production, then set NODE_ENV to 'production' manually
-const rootDir = process.env.NODE_ENV === 'production' ? 'dist/src' : 'src' 
+const rootDir = process.env.NODE_ENV === 'production' ? './dist/src' : './src' 
 
 module.exports = {
   "type": "postgres",
