@@ -16,13 +16,6 @@ class ServiceService {
     return await repository.find()
   }
 
-  async deleteService(id: number) {
-    const repository = getRepository(Service)
-
-    const result = await repository.delete(id)
-
-    return result.affected
-  }
 }
 
 export default new ServiceService()

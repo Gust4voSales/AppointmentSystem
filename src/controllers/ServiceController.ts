@@ -21,14 +21,6 @@ class ServiceController {
 
     return res.status(200).json({ services })
   }
-
-  async destroy(req: Request, res: Response) {
-    const { id } = req.params
-
-    const deleted = await ServiceService.deleteService(Number(id))
-
-    return res.status(200).json({ deleted })
-  }
 }
 
 
