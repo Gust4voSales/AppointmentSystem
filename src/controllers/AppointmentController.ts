@@ -40,9 +40,9 @@ class AppointmentController {
   async destroy(req: Request, res: Response) {
     const { id } = req.params
 
-    const deleted = await AppointmentService.cancelAppointment(id)
+    await AppointmentService.cancelAppointment(id)
 
-    return res.status(200).json({ deleted })
+    return res.status(204).json({})
   }
 }
 

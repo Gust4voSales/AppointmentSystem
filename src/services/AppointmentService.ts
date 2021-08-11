@@ -1,4 +1,4 @@
-import { getCustomRepository, } from "typeorm"
+import { getCustomRepository, QueryFailedError, } from "typeorm"
 import BadRequestException from "../errors/exceptions/BadRequest"
 import NotFoundException from '../errors/exceptions/NotFound'
 import { Appointment } from "../models/Appointment"
@@ -25,10 +25,18 @@ class AppointmentService {
 
   async cancelAppointment (id: string) {
     const repository = getCustomRepository(AppointmentRepository)
-
-    const result = await repository.delete(id)
-      
-    return result.affected;
+    
+    try {
+      const { affected } = await repository.delete(id)
+    
+      if (affected===0)
+        throw new NotFoundException("Appointment not found")
+    } catch (err) {
+      if (err instanceof QueryFailedError)
+        throw new NotFoundException("Appointment not found")
+      throw err      
+    }
+    
   }
 
   async getUserAppointments(userId: string) {

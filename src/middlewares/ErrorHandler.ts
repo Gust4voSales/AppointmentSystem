@@ -12,7 +12,7 @@ const ErrorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
   // 🚧🚧🚧🚧INTERNAL SERVER ERROR🚧🚧🚧🚧
   // HERE IS A GOOD PLACE TO CALL SOME LOGGER PASSING -> err.message
   console.log("---------------ERROR CONSOLE START---------------")
-  console.log(err.message)  
+  console.log(err.name + ': ' + err.message)  
   console.log("---------------ERROR CONSOLE END-----------------")
   
   return res.status(500).json({
