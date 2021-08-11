@@ -1,6 +1,7 @@
 import { getCustomRepository, } from "typeorm"
 import BadRequestException from "../errors/exceptions/BadRequest"
 import NotFoundException from '../errors/exceptions/NotFound'
+import { Appointment } from "../models/Appointment"
 import { AppointmentRepository } from "../repositories/AppointmentRepository"
 import { ServiceRepository } from "../repositories/ServiceRepository"
 
@@ -32,10 +33,12 @@ class AppointmentService {
 
   async getUserAppointments(userId: string) {
     const repository = getCustomRepository(AppointmentRepository)
-
-    const appointments = await repository.find({ client_user_id: userId, })
-    // const appointments = await repository
-    //   .createQueryBuilder()
+ 
+    const appointments = await repository
+      .createQueryBuilder("appointment")
+      .where("appointment.client_user_id = :userId", { userId })
+      .leftJoinAndSelect("appointment.service", "service")
+      .getMany()
 
     return appointments
   }
