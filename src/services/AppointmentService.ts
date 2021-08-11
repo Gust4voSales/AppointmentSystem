@@ -1,16 +1,22 @@
 import { getCustomRepository, } from "typeorm"
-import NotFoundException from "../errors/exceptions/NotFound"
+import BadRequestException from "../errors/exceptions/BadRequest"
+import NotFoundException from '../errors/exceptions/NotFound'
 import { AppointmentRepository } from "../repositories/AppointmentRepository"
+import { ServiceRepository } from "../repositories/ServiceRepository"
 
 
 class AppointmentService {
-  async scheduleAppointment(userId: string, service: number, dateTime: Date, employee: string) {
+  async scheduleAppointment(userId: string, serviceId: number, dateTime: Date, employee: string) {
     const repository = getCustomRepository(AppointmentRepository)
+    const serviceRepo = getCustomRepository(ServiceRepository)
 
     // CHECK IF SERVICE EXISTS 
+    const service = await serviceRepo.findOne(serviceId)
+    if (!service)
+      throw new BadRequestException("Invalid service")
 
     const appointment = repository.create({
-      service_id: service, dateTime, employee, client_user_id: userId
+      service_id: serviceId, dateTime, employee, client_user_id: userId
     })
     
     return await repository.save(appointment)
