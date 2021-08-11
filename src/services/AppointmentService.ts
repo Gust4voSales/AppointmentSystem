@@ -36,8 +36,11 @@ class AppointmentService {
  
     const appointments = await repository
       .createQueryBuilder("appointment")
+      .select() // select everything from APPOINTMENT
+      .addSelect("service.name") // select name from service
+      .addSelect("service.duration") // select duration from service
       .where("appointment.client_user_id = :userId", { userId })
-      .leftJoinAndSelect("appointment.service", "service")
+      .innerJoin("appointment.service", "service")
       .getMany()
 
     return appointments
