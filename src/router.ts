@@ -1,4 +1,5 @@
 import express  from "express"
+import AdminUserController from "./controllers/AdminUserController"
 import AppointmentController from "./controllers/AppointmentController"
 import ServiceController from "./controllers/ServiceController"
 import authFirebase from "./middlewares/firebaseAuth"
@@ -9,7 +10,8 @@ router.get('/', (req, res) => {
   res.json({ msg: "oi" })
 })
 
-// USER ROUTES
+// ADMIN USER ROUTES
+router.post('/admin/signup', AdminUserController.store)
 
 
 // APPOINTMENT ROUTES
