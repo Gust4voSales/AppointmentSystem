@@ -3,13 +3,13 @@ import BadRequestException from "../errors/exceptions/BadRequest"
 import { AdminUser } from "../models/AdminUser"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { expiresIn, JWT_SECRET } from '../config/jwt'
+import jwtConfig from '../config/jwt'
 import NotAuthorizedException from "../errors/exceptions/NotAuthorized"
 
 class AdminUserService {
   generateToken(id: string) {
-    const token = jwt.sign({ id }, JWT_SECRET, {
-      expiresIn, 
+    const token = jwt.sign({ id }, jwtConfig.JWT_SECRET, {
+      expiresIn: jwtConfig.expiresIn, 
     }); 
 
     return token
