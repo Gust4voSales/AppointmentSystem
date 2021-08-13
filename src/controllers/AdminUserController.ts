@@ -7,7 +7,7 @@ class AdminUserController {
 
     const admin = await AdminUserService.signUp(name, email, password)
 
-    res.status(201).json({ admin })
+    return res.status(201).json({ admin })
   }
 }
 

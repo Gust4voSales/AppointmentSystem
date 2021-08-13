@@ -12,7 +12,7 @@ module.exports = {
   /* url contaims all necessary fields to connect to the DB server, the url looks like this: 
     postgres://<username>:<password>@<host>:<port>/<database> */
   "url": process.env.DATABASE_URL, // Example: postgres://postgres_user:postgres_secret_password@localhost:5432/postgres_database_name */
-  "logging": false,
+  "logging": true,
   "entities": [
     rootDir + "/models/**/*.{js,ts}",
   ],

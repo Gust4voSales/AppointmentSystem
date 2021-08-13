@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm"
 import BadRequestException from "../errors/exceptions/BadRequest"
 import { AdminUser } from "../models/AdminUser"
+import bcrypt from 'bcrypt'
 
 class AdminUserService {
   async signUp(name: string, email: string, password: string) {
@@ -19,6 +20,33 @@ class AdminUserService {
     
     return adminUser   
   }
+
+  async signIn(email: string, password: string) {
+    const repository = getRepository(AdminUser)
+
+    const admin = await repository
+      .createQueryBuilder("admin_user")
+      .select()
+      .addSelect("admin_user.password") // include password
+      .where("admin_user.email = :email", { email })
+      .getOne()
+    
+    if (!admin) { // email not found
+      throw new BadRequestException("Email ou senha inválido")
+    }
+    
+    if (!await bcrypt.compare(password, admin.password)) { // password doesn't match
+      throw new BadRequestException("Email ou senha inválido")
+    }
+
+    admin.id = undefined
+    admin.password = undefined
+    
+    // GENERATE TOKEN
+
+    return { admin, token: '' }
+  }
 }
+
 
 export default new AdminUserService()
