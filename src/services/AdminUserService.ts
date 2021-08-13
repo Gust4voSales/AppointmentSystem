@@ -22,7 +22,7 @@ class AdminUserService {
     // CHECK IF ADMIN EMAIL ALREADY EXISTS
     const exists = !!await repository.findOne({ email })
     if (exists) {
-      throw new BadRequestException("Email já em uso")
+      throw new BadRequestException("Email already taken")
     }
 
     const adminUser = repository.create({ name, email, password })
@@ -44,11 +44,11 @@ class AdminUserService {
       .getOne()
     
     if (!admin) { // email not found
-      throw new NotAuthorizedException("Email ou senha inválido")
+      throw new NotAuthorizedException("Email or password invalid")
     }
     
     if (!await bcrypt.compare(password, admin.password)) { // password doesn't match
-      throw new NotAuthorizedException("Email ou senha inválido")
+      throw new NotAuthorizedException("Email or password invalid")
     }
 
     // GENERATE TOKEN
