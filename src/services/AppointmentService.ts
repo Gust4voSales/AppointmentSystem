@@ -32,7 +32,7 @@ class AppointmentService {
       if (affected===0)
         throw new NotFoundException("Appointment not found")
     } catch (err) {
-      if (err instanceof QueryFailedError)
+      if (err instanceof QueryFailedError) // invalid uuid passed
         throw new NotFoundException("Appointment not found")
       throw err      
     }
