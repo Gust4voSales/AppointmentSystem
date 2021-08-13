@@ -2,6 +2,7 @@ import { getRepository } from "typeorm"
 import BadRequestException from "../errors/exceptions/BadRequest"
 import { AdminUser } from "../models/AdminUser"
 import bcrypt from 'bcrypt'
+import NotAuthorizedException from "../errors/exceptions/NotAuthorized"
 
 class AdminUserService {
   async signUp(name: string, email: string, password: string) {
@@ -32,18 +33,19 @@ class AdminUserService {
       .getOne()
     
     if (!admin) { // email not found
-      throw new BadRequestException("Email ou senha inválido")
+      throw new NotAuthorizedException("Email ou senha inválido")
     }
     
     if (!await bcrypt.compare(password, admin.password)) { // password doesn't match
-      throw new BadRequestException("Email ou senha inválido")
+      throw new NotAuthorizedException("Email ou senha inválido")
     }
+
+    // GENERATE TOKEN
+  
 
     admin.id = undefined
     admin.password = undefined
-    
-    // GENERATE TOKEN
-
+  
     return { admin, token: '' }
   }
 }
