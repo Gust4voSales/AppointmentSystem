@@ -2,9 +2,20 @@ import { getRepository } from "typeorm"
 import BadRequestException from "../errors/exceptions/BadRequest"
 import { AdminUser } from "../models/AdminUser"
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { expiresIn, JWT_SECRET } from '../config/jwt'
 import NotAuthorizedException from "../errors/exceptions/NotAuthorized"
 
 class AdminUserService {
+  generateToken(id: string) {
+    const token = jwt.sign({ id }, JWT_SECRET, {
+      expiresIn, 
+    }); 
+
+    return token
+  }
+
+
   async signUp(name: string, email: string, password: string) {
     const repository = getRepository(AdminUser)
 
@@ -41,12 +52,12 @@ class AdminUserService {
     }
 
     // GENERATE TOKEN
-  
+    const token = this.generateToken(admin.id)
 
     admin.id = undefined
     admin.password = undefined
   
-    return { admin, token: '' }
+    return { admin, token, }
   }
 }
 
