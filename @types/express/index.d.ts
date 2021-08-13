@@ -10,5 +10,7 @@ declare namespace Express {
         sign_in_provider: string
       }
     }
+    
+    admin_user_id?: string
   }
 }
